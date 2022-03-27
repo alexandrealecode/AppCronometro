@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "moduloBasico",
+    "slug": "moduloBasico",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
