@@ -13,7 +13,8 @@ class App extends Component {
     super(props);
     this.state = {
       numero: 0,
-      botao: 'VAI'
+      botao: 'VAI',
+      ultimo: null
     };
 
     //Variável do timer do relógio.
@@ -34,12 +35,12 @@ class App extends Component {
 
       //Começa girar o timer
       this.timer = setInterval( ()=> {
-        this.setState({numero: this.state.numero + 0.1})
+        this.setState({numero: this.state.numero + 0.1});
       }, 100);
 
       this.setState({botao: 'PARAR'});
     }
-    
+
   }
 
   limpar() {
@@ -49,7 +50,9 @@ class App extends Component {
       this.timer = null;
     }
     this.setState({
-      numero: 0
+      ultimo: this.state.numero,
+      numero: 0,
+      botao: 'VAI'
     })
   }
 
@@ -62,18 +65,24 @@ class App extends Component {
           style={styles.cronometro}
         />
 
-        <Text style={styles.timer}> {this.state.numero.toFixed(1)} </Text>
+        <Text style={styles.timer}> { this.state.numero.toFixed(1)} </Text>
 
         <View style={styles.btnArea}>
 
           <TouchableOpacity style={styles.btn}>
-            <Text style={styles.btnTexto} onPress={this.vai}>VAI</Text>
+            <Text style={styles.btnTexto} onPress={this.vai}>{this.state.botao}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.btn} onPress={this.limpar}>
             <Text style={styles.btnTexto}>LIMPAR</Text>
           </TouchableOpacity>
 
+        </View>
+
+        <View style={styles.areaUltima}>
+          <Text style={styles.textoCorrida}>
+            {this.state.ultimo > 0 ? 'Ultimo tempo: ' + this.state.ultimo.toFixed(2) + ' segundos' : ''}
+          </Text>
         </View>
         
       </View>
@@ -92,12 +101,12 @@ const styles = StyleSheet.create({
     marginTop: -170,
     color: '#FFF',
     fontSize: 65,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   btnArea: {
     flexDirection: 'row',
     marginTop: 70,
-    height: 40
+    height: 40,
   },
   btn: {
     flex: 1,
@@ -107,18 +116,26 @@ const styles = StyleSheet.create({
     height: 40,
     width: 150,
     margin: 17,
-    borderRadius: 9
+    borderRadius: 9,
   },
   btnTexto: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#00aeef'
+    color: '#00aeef',
+  },
+  areaUltima: {
+     marginTop: 40,
+  },
+  textoCorrida: {
+    fontSize: 25,
+    fontStyle:'italic',
+    color: '#FFF',
   },
   cronometro: {
     marginTop: -160,
     padding: 50,
     width: 250,
-    height:300
+    height:300,
   }
 });
 
